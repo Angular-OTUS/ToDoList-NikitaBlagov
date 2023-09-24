@@ -12,9 +12,19 @@ export class TodolistComponent {
     { id: 3, text: 'Lorem ipsum dolor sit.' }
   ];
 
+  inputValue: any;
+
   public deleteItem(itemId: number) {
     this.todoItems = this.todoItems.filter(item => item.id !== itemId);
   }
-
+  public  addItem() {
+    const maxId = Math.max(...this.todoItems.map(item => item.id), 0);
+    const text = this.inputValue;
+    const newItem = {
+      id: maxId + 1,
+      text: text
+    };
+    this.todoItems.push(newItem);
+  }
 
 }
