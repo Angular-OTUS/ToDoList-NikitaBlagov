@@ -22,9 +22,15 @@ export class TodolistComponent {
     this.todoItems = this.todoItems.filter(item => item.id !== itemId);
   }
 
+  public getMaxId(items: any[]) {
+    return Math.max(...items.map(item => item.id), 0);
+  }
   public  addItem(): void {
-    const maxId = Math.max(...this.todoItems.map(item => item.id), 0);
+    const maxId = this.getMaxId(this.todoItems)
     const text: string = this.form.controls.textInput.value as string;
+    if (text === null) {
+      return;
+    }
     const newItem = {
       id: maxId + 1,
       text: text
