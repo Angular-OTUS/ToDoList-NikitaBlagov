@@ -4,7 +4,7 @@ import { TodoItem } from 'src/app/models';
 @Component({
   selector: 'app-todolist-item',
   templateUrl: './todolist-item.component.html',
-  styleUrls: ['./todolist-item.component.scss']
+  styleUrls: ['./todolist-item.component.scss'],
 })
 export class TodolistItemComponent {
   @Input({ required: true }) todoItem!: TodoItem;
