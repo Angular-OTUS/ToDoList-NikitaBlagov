@@ -1,46 +1,22 @@
-
 <div class="todolist">
   <h1>Todo List</h1>
   <div *ngIf="isLoading">
     <mat-spinner></mat-spinner>
   </div>
   <div *ngIf="!isLoading">
-  <ul class="task-list">
-    <li *ngFor="let item of todoItems">
-      <app-todolist-item
-        [todoItem]="item"
-        (delete)="deleteItem($event)"
-      ></app-todolist-item>
-    </li>
-  </ul>
-  <form
-    class="input-container"
-    [formGroup]="form"
-    (submit)="addItem()"
-  >
+    <ul class="task-list">
+      <li *ngFor="let item of todoItems">
+        <app-todolist-item [todoItem]="item" (delete)="deleteItem($event)"></app-todolist-item>
+      </li>
+    </ul>
+    <form class="input-container" [formGroup]="form" (submit)="addItem()">
 
-  <mat-form-field appearance="fill">
-    <mat-label>Добавить задачу</mat-label>
-    <input
-      type="text"
-      formControlName="textInput"
-      matInput
-    >
-  </mat-form-field>
-    <!-- <button
-      type="submit"
-      class="add-btn"
-      [disabled]="!form.valid"
-    >Add</button> -->
-    <shared-button
-      [title]="'Add'"
-      [green]="true"
-      [disabled]="!form.valid"
-      [type]="'submit'"
-      (click)="addItem()"
-    >
-    </shared-button>
-  </form>
+      <mat-form-field appearance="fill">
+        <mat-label>Добавить задачу</mat-label>
+        <input type="text" formControlName="textInput" matInput>
+      </mat-form-field>
+      <shared-button [title]="'Add'" [green]="true" [disabled]="!form.valid" [type]="'submit'" (click)="addItem()">
+      </shared-button>
+    </form>
   </div>
 </div>
-
