@@ -1,0 +1,31 @@
+.button {
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.add-btn {
+  background-color: #18711b;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+[disabled] {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.delete-btn {
+  background-color: #d51e11;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}

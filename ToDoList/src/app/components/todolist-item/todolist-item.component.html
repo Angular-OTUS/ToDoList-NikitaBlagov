@@ -1,0 +1,10 @@
+<div class="todolist-item">
+  <span>{{todoItem.id}} {{todoItem.text}}</span>
+  <!-- <button class="delete-btn" (click)="deleteItem(todoItem.id)">Delete</button> -->
+  <shared-button
+  [title]="'Delete'"
+  [red]="true"
+  [type]="'submit'"
+  (click)="deleteItem(todoItem.id)"
+  ></shared-button>
+</div>
