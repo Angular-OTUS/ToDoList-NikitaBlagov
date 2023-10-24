@@ -1,18 +1,33 @@
 
 <div class="todolist">
   <h1>Todo List</h1>
+
   <div *ngIf="isLoading">
     <mat-spinner></mat-spinner>
   </div>
   <div *ngIf="!isLoading">
-  <ul class="task-list">
-    <li *ngFor="let item of todoItems">
-      <app-todolist-item
-        [todoItem]="item"
-        (delete)="deleteItem($event)"
-      ></app-todolist-item>
-    </li>
-  </ul>
+
+  <div class="task-wrapper">
+
+    <ul class="task-list">
+      <li *ngFor="let item of todoItems">
+        <app-todolist-item
+          [ngClass]="{
+            'selected': item.id === selectedItemId
+          }"
+          [todoItem]="item"
+          (click)="clickItem(item)"
+          (delete)="deleteItem($event)"
+        ></app-todolist-item>
+      </li>
+    </ul> <!-- .task-list -->
+
+    <div class="task-description">
+      {{ getSelectedDescriptionItem() }}
+    </div>
+
+  </div>
+
   <form
     class="input-container"
     [formGroup]="form"
@@ -20,12 +35,17 @@
   >
 
   <mat-form-field appearance="fill">
-    <mat-label>Добавить задачу</mat-label>
+    <mat-label>Название задачи</mat-label>
     <input
       type="text"
       formControlName="textInput"
       matInput
     >
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Описание задачи</mat-label>
+    <textarea matInput formControlName="textarea"></textarea>
   </mat-form-field>
     <!-- <button
       type="submit"

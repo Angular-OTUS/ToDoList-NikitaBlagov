@@ -7,8 +7,9 @@ import { TodoItem } from 'src/app/models';
   styleUrls: ['./todolist-item.component.scss'],
 })
 export class TodolistItemComponent {
-  @Input({ required: true }) todoItem!: TodoItem;
-  @Output() delete: EventEmitter<number> = new EventEmitter<number>();
+  @Input({ required: true }) public todoItem!: TodoItem;
+  @Output() public delete: EventEmitter<number> = new EventEmitter<number>();
+
 
   public deleteItem(itemId: number): void {
     this.delete.emit(itemId);
