@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TodoItem } from 'src/app/models';
+import {SharedModule} from "../../shared/shared.module";
 
 @Component({
   selector: 'app-todolist',
@@ -15,9 +16,9 @@ export class TodolistComponent implements OnInit{
   });
 
   public todoItems: TodoItem[] = [
-    { id: 1, description: '123', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, commodi?' },
-    { id: 2, description: '234', text: 'Lorem ipsum dolor sit amet consectetur.' },
-    { id: 3, description: '456', text: 'Lorem ipsum dolor sit.' }
+    { id: 1, description: 'Описание 1 задачи', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, commodi?' },
+    { id: 2, description: 'Описание 2 задачи', text: 'Lorem ipsum dolor sit amet consectetur.' },
+    { id: 3, description: 'Описание 3 задачи', text: 'Lorem ipsum dolor sit.' }
   ];
   public isLoading: boolean = true;
 

@@ -11,12 +11,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { SharedModule } from './shared/shared.module';
+import { TooltipComponent } from './components/tooltip/tooltip.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodolistComponent,
     TodolistItemComponent,
+    TooltipComponent,
   ],
   imports: [
     BrowserModule,

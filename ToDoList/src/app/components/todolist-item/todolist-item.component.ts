@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TodoItem } from 'src/app/models';
+import {TodoItem} from "../../models";
+import {SharedModule} from "../../shared/shared.module";
 
 @Component({
   selector: 'app-todolist-item',
