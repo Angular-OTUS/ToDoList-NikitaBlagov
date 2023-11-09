@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TodoItem } from 'src/app/models';
-import {SharedModule} from "../../shared/shared.module";
+import { TodoService } from 'src/app/services/todo.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-todolist',
@@ -14,13 +15,12 @@ export class TodolistComponent implements OnInit{
     textInput: new FormControl('', [Validators.required, Validators.minLength(3)]),
     textarea: new FormControl('', [Validators.required])
   });
-
-  public todoItems: TodoItem[] = [
-    { id: 1, description: 'Описание 1 задачи', text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, commodi?' },
-    { id: 2, description: 'Описание 2 задачи', text: 'Lorem ipsum dolor sit amet consectetur.' },
-    { id: 3, description: 'Описание 3 задачи', text: 'Lorem ipsum dolor sit.' }
-  ];
   public isLoading: boolean = true;
+  public todos$: Observable<TodoItem[]> = this.todoService.todos$;
+
+  constructor(
+    private todoService: TodoService
+  ) {}
 
   ngOnInit(): void  {
     setTimeout(() => {
@@ -28,23 +28,17 @@ export class TodolistComponent implements OnInit{
     }, 500);
   }
   public deleteItem(itemId: number): void {
-    this.todoItems = this.todoItems.filter(item => item.id !== itemId);
+    this.todoService.delete(itemId);
   }
 
   public  addItem(): void {
-    const maxId = Math.max(...this.todoItems.map(item => item.id), 0);
     const text = this.form.controls.textInput.value as string;
     const description = this.form.controls.textarea.value as string;
 
-    if (text !== null) {
-      const newItem = {
-        id: maxId + 1,
-        text: text,
-        description: description
-      };
-
-      this.todoItems.push(newItem);
-    }
+    this.todoService.add({
+      text: text,
+      description: description
+    });
 
     this.form.controls.textInput.setValue('');
     this.form.controls.textarea.setValue('');
@@ -55,13 +49,14 @@ export class TodolistComponent implements OnInit{
   }
 
   public getSelectedDescriptionItem(): string {
-    if (this.selectedItemId === null) return '';
+    // if (this.selectedItemId === null) return '';
 
-    const findedItem = this.todoItems.find(item => item.id === this.selectedItemId);
+    // const findedItem = this.todoItems.find(item => item.id === this.selectedItemId);
 
-    if (findedItem === undefined) return '';
+    // if (findedItem === undefined) return '';
 
-    return findedItem.description;
+    // return findedItem.description;
+    return '';
   }
 
 }

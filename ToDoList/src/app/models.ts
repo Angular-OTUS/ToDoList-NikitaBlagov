@@ -3,3 +3,8 @@ export interface TodoItem {
   description: string;
   id: number;
 }
+
+export interface TodoItemAdd {
+  text: string;
+  description: string;
+}

@@ -10,16 +10,18 @@
   <div class="task-wrapper">
 
     <ul class="task-list">
-      <li *ngFor="let item of todoItems">
-        <app-todolist-item
-          [ngClass]="{
-            'selected': item.id === selectedItemId
-          }"
-          [todoItem]="item"
-          (click)="clickItem(item)"
-          (delete)="deleteItem($event)"
-        ></app-todolist-item>
-      </li>
+      <ng-container *ngIf="todos$ | async as todos">
+        <li *ngFor="let item of todos">
+          <app-todolist-item
+            [ngClass]="{
+              'selected': item.id === selectedItemId
+            }"
+            [todoItem]="item"
+            (click)="clickItem(item)"
+            (delete)="deleteItem($event)"
+          ></app-todolist-item>
+        </li>
+      </ng-container>
     </ul> <!-- .task-list -->
 
     <div class="task-description">
