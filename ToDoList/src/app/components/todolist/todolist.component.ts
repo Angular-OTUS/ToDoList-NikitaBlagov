@@ -31,6 +31,9 @@ export class TodolistComponent implements OnInit {
     setTimeout(() => {
       this.isLoading = false;
     }, 500);
+
+    console.log(1);
+
   }
 
   public deleteItem(itemId: number): void {
