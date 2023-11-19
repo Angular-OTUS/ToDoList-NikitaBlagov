@@ -1,27 +1,33 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, map } from 'rxjs';
+import { BehaviorSubject, Observable, filter, map, tap } from 'rxjs';
 import { TodoItem, TodoItemAdd } from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
-  private stateTodos: BehaviorSubject<TodoItem[]> = new BehaviorSubject<TodoItem[]>([]);
+  private stateTodos: BehaviorSubject<TodoItem[]> = new BehaviorSubject<TodoItem[]>([
+    {
+      text: 'sda',
+      description: 'sdadsa',
+      id: 1
+    },
+    {
+      text: 'asd',
+      description: 'asda',
+      id: 2
+    }
+  ]);
   private stateSelectedItemId: BehaviorSubject<number | null> = new BehaviorSubject<null | number>(null);
-  private selectedItem$ = this.stateSelectedItemId
+  private selectedItem$: Observable<TodoItem | null> = this.stateSelectedItemId
     .pipe(
-      filter(selectedItemId => selectedItemId !== null),
-      map(selectedItemId => this.findById(selectedItemId as number)),
-      filter(selectedItemId => selectedItemId !== null),
+      map(selectedItemId => this.findById(selectedItemId as number))
     );
 
-  public selectedItemId$ = this.stateSelectedItemId.
-    pipe(
-      filter(selectedItemId => selectedItemId !== null),
-    );
-  public selectedItemDescription$: Observable<string | undefined> = this.selectedItem$
+  public selectedItemId$: Observable<number | null> = this.stateSelectedItemId.asObservable();
+  public selectedItemDescription$: Observable<string | null> = this.selectedItem$
     .pipe(
-      map(selectedItem => selectedItem?.description)
+      map(selectedItem => (selectedItem ? selectedItem.description : null))
     );
   public todos$: Observable<TodoItem[]> = this.stateTodos.asObservable();
 
@@ -56,7 +62,9 @@ export class TodoService {
   public delete(id: number): void {
     const lastStateTodos = this.stateTodos.value;
     const filteredTodos = lastStateTodos.filter(todo => todo.id !== id);
+    const currentSelectedId = this.stateSelectedItemId.value;
 
+    if (currentSelectedId === id) this.stateSelectedItemId.next(null);
     this.stateTodos.next(filteredTodos);
   }
 

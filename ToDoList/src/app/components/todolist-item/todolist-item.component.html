@@ -1,4 +1,26 @@
-<div class="todolist-item">
+<div
+  class="todolist-item"
+  (dblclick)="setEditMode(true)"
+>
   <span>{{todoItem.id}} {{todoItem.text}}</span>
   <button class="delete-btn" [tooltip]="'Нажмите для добавления удаления задачи'" (click)="deleteItem(todoItem.id)">Delete</button>
 </div>
+
+<!-- <div
+  (dblclick)="setEditMode(true)"
+></div> -->
+
+<ng-container
+  *ngIf="isEdit"
+>
+  <div>
+    <input
+      [(ngModel)]="todoItem.text"
+      (blur)="saveEditItem()"
+    >
+
+    <button
+      (click)="saveEditItem()"
+    >Save</button>
+  </div>
+</ng-container>

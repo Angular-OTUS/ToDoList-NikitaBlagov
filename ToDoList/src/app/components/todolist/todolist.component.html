@@ -20,19 +20,9 @@
                   }"
                   [todoItem]="item"
                   (click)="clickItem(item)"
-                  (dblclick)="dblClickItem(item)"
                   (delete)="deleteItem($event)"
                 ></app-todolist-item>
               </ng-container>
-
-              <!-- Тут добавляется сохранение -->
-              <div *ngIf="selectedItemIdForEdit === item.id">
-                <input
-                  [(ngModel)]="item.text"
-                  (blur)="saveEdit(item)">
-
-                <button (click)="saveEdit(item)">Save</button>
-              </div>
 
             </li>
           </ng-container>

@@ -15,13 +15,10 @@ export class TodolistComponent implements OnInit {
     textarea: new FormControl('', [Validators.required])
   });
   public isLoading: boolean = true;
-  public todos$: Observable<TodoItem[]> = this.todoService.todos$
-    .pipe(
-      tap(console.log)
-    );
+  public todos$: Observable<TodoItem[]> = this.todoService.todos$;
   public selectedItemIdForEdit: number | null = null;
-  public selectedItemId$ = this.todoService.selectedItemId$;
-  public selectedItemDescription$ = this.todoService.selectedItemDescription$;
+  public selectedItemId$: Observable<number | null> = this.todoService.selectedItemId$;
+  public selectedItemDescription$: Observable<string | null> = this.todoService.selectedItemDescription$;
 
   constructor(
     private todoService: TodoService
@@ -32,7 +29,7 @@ export class TodolistComponent implements OnInit {
       this.isLoading = false;
     }, 500);
 
-    console.log(1);
+    // console.log(1);
 
   }
 
@@ -60,13 +57,6 @@ export class TodolistComponent implements OnInit {
     this.todoService.select(todoItem.id);
   }
 
-  public dblClickItem(todoItem: TodoItem) {
-    this.selectedItemIdForEdit = todoItem.id;
-  }
 
-  public saveEdit(item: TodoItem) {
-    this.todoService.edit(item);
-    this.selectedItemIdForEdit = null;
-  }
 
 }
