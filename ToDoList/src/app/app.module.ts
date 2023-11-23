@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { SharedModule } from './shared/shared.module';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
+import { ToastsComponent } from './components/toasts/toasts.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { TooltipComponent } from './components/tooltip/tooltip.component';
     TodolistComponent,
     TodolistItemComponent,
     TooltipComponent,
+    ToastsComponent
   ],
   imports: [
     BrowserModule,

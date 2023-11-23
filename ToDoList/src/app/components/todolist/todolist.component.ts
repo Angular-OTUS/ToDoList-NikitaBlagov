@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TodoItem } from 'src/app/models';
 import { TodoService } from 'src/app/services/todo.service';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-todolist',
@@ -21,8 +22,12 @@ export class TodolistComponent implements OnInit {
   public selectedItemDescription$: Observable<string | null> = this.todoService.selectedItemDescription$;
 
   constructor(
-    private todoService: TodoService
+    private todoService: TodoService,
+    private toastService: ToastService
   ) {}
+
+
+
 
   ngOnInit(): void  {
     setTimeout(() => {
@@ -55,6 +60,10 @@ export class TodolistComponent implements OnInit {
 
   public clickItem(todoItem: TodoItem): void {
     this.todoService.select(todoItem.id);
+  }
+
+  onAddTodo() {
+    this.toastService.showToast('Задача добавлена');
   }
 
 

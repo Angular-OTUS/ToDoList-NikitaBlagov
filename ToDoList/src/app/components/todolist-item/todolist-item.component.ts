@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {TodoItem} from "../../models";
 import {SharedModule} from "../../shared/shared.module";
 import { TodoService } from 'src/app/services/todo.service';
-
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-todolist-item',
@@ -16,7 +16,8 @@ export class TodolistItemComponent {
   public isEdit: boolean = false;
 
   constructor(
-    private todoService: TodoService
+    private todoService: TodoService,
+    private toastService: ToastService
   ) {}
 
 
@@ -29,8 +30,14 @@ export class TodolistItemComponent {
   }
 
   public saveEditItem(): void {
+    this.setEditMode(false);
     this.todoService.edit(this.todoItem);
-
+    this.toastService.showToast('Задача изменена');
   }
+
+  public onDeliteTodo(): void {
+    this.toastService.showToast('Задача удалена');
+  }
+
 
 }

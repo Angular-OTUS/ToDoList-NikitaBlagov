@@ -8,13 +8,13 @@ import { TodoItem, TodoItemAdd } from '../models';
 export class TodoService {
   private stateTodos: BehaviorSubject<TodoItem[]> = new BehaviorSubject<TodoItem[]>([
     {
-      text: 'sda',
-      description: 'sdadsa',
+      text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error, nisi.',
+      description: 'Description first task',
       id: 1
     },
     {
-      text: 'asd',
-      description: 'asda',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, nesciunt.',
+      description: 'Description second task',
       id: 2
     }
   ]);
@@ -50,6 +50,11 @@ export class TodoService {
     const findedTodoIdx = lastStateTodos.findIndex((stateTodo) => todo.id === stateTodo.id);
 
     if (findedTodoIdx === -1) return;
+    if (
+      todo.description === lastStateTodos[findedTodoIdx].description &&
+      todo.text === lastStateTodos[findedTodoIdx].text
+    ) return;
+
     lastStateTodos[findedTodoIdx] = {
       id: todo.id,
       description: todo.description,
