@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ToastService } from 'src/app/services/toast.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'toasts',
@@ -9,16 +9,10 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class ToastsComponent {
 
+  public toasts$: Observable<string[]> = this.toastService.toasts$;
+
   constructor(private toastService: ToastService) {}
 
-  ngOnInit() {
-    setInterval(() => {
-      this.toastService.toasts.shift();
-    }, 2000);
-  }
-  get toasts() {
-    return this.toastService.toasts
-  }
 
 
 }
