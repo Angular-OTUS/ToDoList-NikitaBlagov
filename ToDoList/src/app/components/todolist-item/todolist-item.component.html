@@ -33,11 +33,14 @@
       }"
     >
       <span>{{todoItem.id}} {{todoItem.text}}</span>
-      <button class="delete-btn"
-              [tooltip]="'Нажмите для удаления задачи'"
-              (click)="deleteItem(todoItem.id)"
-              (click)="onDeliteTodo()"
-              >Delete</button>
+        <shared-button
+          [tooltip]="'Нажмите для удаления задачи'"
+          (click)="deleteItem(todoItem.id)"
+          (click)="onDeleteTodo()"
+          [red]="true"
+        >
+          Delete
+        </shared-button>
     </div>
 
     <div

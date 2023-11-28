@@ -35,7 +35,7 @@ export class TodolistItemComponent {
     this.toastService.showToast('Задача изменена');
   }
 
-  public onDeliteTodo(): void {
+  public onDeleteTodo(): void {
     this.toastService.showToast('Задача удалена');
   }
 
