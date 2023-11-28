@@ -1,0 +1,69 @@
+
+<div class="todolist">
+  <h1>Todo List</h1>
+
+  <div *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div *ngIf="!isLoading">
+
+  <div class="task-wrapper">
+
+    <ul class="task-list">
+      <ng-container *ngIf="todos$ | async as todos">
+        <li *ngFor="let item of todos">
+          <app-todolist-item
+            [ngClass]="{
+              'selected': item.id === selectedItemId
+            }"
+            [todoItem]="item"
+            (click)="clickItem(item)"
+            (delete)="deleteItem($event)"
+          ></app-todolist-item>
+        </li>
+      </ng-container>
+    </ul> <!-- .task-list -->
+
+    <div class="task-description">
+      {{ getSelectedDescriptionItem() }}
+    </div>
+
+  </div>
+
+  <form
+    class="input-container"
+    [formGroup]="form"
+    (submit)="addItem()"
+  >
+
+  <mat-form-field appearance="fill">
+    <mat-label>Название задачи</mat-label>
+    <input
+      type="text"
+      formControlName="textInput"
+      matInput
+    >
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Описание задачи</mat-label>
+    <textarea matInput formControlName="textarea"></textarea>
+  </mat-form-field>
+    <!-- <button
+      type="submit"
+      class="add-btn"
+      [disabled]="!form.valid"
+    >Add</button> -->
+    <shared-button
+      [tooltip]="'Нажмите для добавления задачи'"
+      [title]="'Add'"
+      [green]="true"
+      [disabled]="!form.valid"
+      [type]="'submit'"
+      (click)="addItem()"
+    >
+    </shared-button>
+  </form>
+  </div>
+</div>
+

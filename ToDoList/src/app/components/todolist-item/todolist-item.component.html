@@ -1,0 +1,4 @@
+<div class="todolist-item">
+  <span>{{todoItem.id}} {{todoItem.text}}</span>
+  <button class="delete-btn" [tooltip]="'Нажмите для добавления удаления задачи'" (click)="deleteItem(todoItem.id)">Delete</button>
+</div>
