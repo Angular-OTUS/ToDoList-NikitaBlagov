@@ -1,16 +1,21 @@
-:host.selected {
-  background-color: rgb(97, 255, 97);
+:host {
   display: block;
 }
 
+:host.selected {
+  background-color: rgb(97, 255, 97);
+}
+
 .todolist-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+.todolist-item__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .delete-btn {
@@ -20,4 +25,8 @@
   border-radius: 5px;
   padding: 10px;
   cursor: pointer;
+}
+
+.todolist-item__content:not(.todolist-item__content_active) {
+  display: none;
 }

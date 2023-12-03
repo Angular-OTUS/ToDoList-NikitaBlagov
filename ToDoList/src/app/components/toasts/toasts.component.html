@@ -1,0 +1,9 @@
+<div class="toasts">
+
+  <ng-container *ngIf="toasts$ | async as toasts">
+    <div class="toast" *ngFor="let toast of toasts">
+      {{toast}}
+    </div>
+  </ng-container>
+
+</div>
