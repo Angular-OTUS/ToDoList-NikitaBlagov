@@ -1,21 +1,27 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, map, tap } from 'rxjs';
-import { TodoItem, TodoItemAdd } from '../models';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { StateTodoStatus, TodoItem, TodoItemAdd, TodoItemStatus } from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
+
+
+  /** Состояние статуса всего списка задач */
+  private stateTodoStatus: BehaviorSubject<StateTodoStatus> = new BehaviorSubject<StateTodoStatus>(StateTodoStatus.ALL);
   private stateTodos: BehaviorSubject<TodoItem[]> = new BehaviorSubject<TodoItem[]>([
     {
       text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error, nisi.',
       description: 'Description first task',
-      id: 1
+      id: 1,
+      status: TodoItemStatus.ACTIVE
     },
     {
       text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, nesciunt.',
       description: 'Description second task',
-      id: 2
+      id: 2,
+      status: TodoItemStatus.COMPLETED
     }
   ]);
   private stateSelectedItemId: BehaviorSubject<number | null> = new BehaviorSubject<null | number>(null);
@@ -31,34 +37,54 @@ export class TodoService {
     );
   public todos$: Observable<TodoItem[]> = this.stateTodos.asObservable();
 
+  /** Все задачи, отфильтрованные по текущему статусу */
+  public todosFilteredByStatus$: Observable<TodoItem[]> = this.stateTodos.pipe(
+    map((stateTodos) => {
+      const newStatus: any = this.stateTodoStatus.value;
+
+      return stateTodos.filter(todo => {
+        if (newStatus === StateTodoStatus.ALL) return true;
+        if (newStatus !== todo.status) return false;
+
+        return true;
+      });
+    })
+  );
+
 
   constructor() { }
+
+  public setStatus(stateTodoStatus: StateTodoStatus): void {
+    this.stateTodoStatus.next(stateTodoStatus);
+  }
 
   public add(todo: TodoItemAdd): void {
     const lastStateTodos = this.stateTodos.value;
     const maxId = Math.max(...lastStateTodos.map(item => item.id), 0);
     const newTodo = {
       ...todo,
+      status: TodoItemStatus.ACTIVE,
       id: maxId + 1
     };
 
     this.stateTodos.next([...lastStateTodos, newTodo]);
   }
 
-  public edit(todo: TodoItem): void {
+  public edit(editedTodo: TodoItem): void {
     const lastStateTodos = this.stateTodos.value;
-    const findedTodoIdx = lastStateTodos.findIndex((stateTodo) => todo.id === stateTodo.id);
+    const findedTodoIdx = lastStateTodos.findIndex((stateTodo) => editedTodo.id === stateTodo.id);
 
     if (findedTodoIdx === -1) return;
     if (
-      todo.description === lastStateTodos[findedTodoIdx].description &&
-      todo.text === lastStateTodos[findedTodoIdx].text
+      editedTodo.description === lastStateTodos[findedTodoIdx].description &&
+      editedTodo.text === lastStateTodos[findedTodoIdx].text
     ) return;
 
     lastStateTodos[findedTodoIdx] = {
-      id: todo.id,
-      description: todo.description,
-      text: todo.text
+      id: editedTodo.id,
+      description: editedTodo.description,
+      text: editedTodo.text,
+      status: editedTodo.status
     };
 
     this.stateTodos.next(lastStateTodos);

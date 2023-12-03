@@ -2,15 +2,6 @@
 <div class="todolist">
   <h1>Todo List</h1>
 
-  <!-- <ng-container *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
-  </ng-container>
-  <ng-container *ngIf="!isLoading"> -->
-
-    <!-- <mat-spinner></mat-spinner> -->
-
-
-
     <div class="task-wrapper" [loading]="isLoading">
       <ul class="task-list">
         <ng-container *ngIf="todos$ | async as todos">
@@ -72,7 +63,5 @@
         Add
       </shared-button>
     </form>
-
-  <!-- </ng-container> -->
 </div> <!-- .todolist -->
 

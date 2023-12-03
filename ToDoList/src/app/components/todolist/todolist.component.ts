@@ -32,7 +32,7 @@ export class TodolistComponent implements OnInit {
   ngOnInit(): void  {
     setTimeout(() => {
       this.isLoading = false;
-    }, 50000);
+    }, 2500);
 
     // console.log(1);
 

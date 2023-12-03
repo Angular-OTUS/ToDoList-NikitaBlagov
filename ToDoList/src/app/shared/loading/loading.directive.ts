@@ -1,5 +1,7 @@
-import { Directive, ElementRef, Input, Renderer2, OnInit, OnChanges, SimpleChanges, ViewContainerRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { Directive, ElementRef, Input, Renderer2, OnInit, OnChanges, SimpleChanges, ViewContainerRef, ComponentRef } from '@angular/core';
+import { ProgressSpinnerComponent } from '../progress-spinner/progress-spinner.component';
+
+type SpinnerItems = 'ProgressSpinnerComponent' | 'другой спиннер' | 'квадратный';
 
 @Directive({
   selector: '[loading]',
@@ -7,7 +9,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 export class LoadingDirective implements OnChanges {
   @Input('loading') public isLoading: boolean = false;
 
-  private spinnerComponentRef: ComponentRef<MatProgressSpinner> | null = null;
+  private spinnerComponentRef: ComponentRef<ProgressSpinnerComponent> | null = null;
 
   constructor(
     private el: ElementRef,
@@ -31,7 +33,7 @@ export class LoadingDirective implements OnChanges {
   }
 
   private showSpinner(): void {
-    this.spinnerComponentRef = this.viewContainerRef.createComponent(MatProgressSpinner);
+    this.spinnerComponentRef = this.viewContainerRef.createComponent(ProgressSpinnerComponent);
   }
 
   private hideSpinner(): void {

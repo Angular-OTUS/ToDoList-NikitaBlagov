@@ -9,7 +9,7 @@ import { TodolistItemComponent } from './components/todolist-item/todolist-item.
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SharedModule } from './shared/shared.module';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { ToastsComponent } from './components/toasts/toasts.component';
@@ -20,7 +20,7 @@ import { ToastsComponent } from './components/toasts/toasts.component';
     TodolistComponent,
     TodolistItemComponent,
     TooltipComponent,
-    ToastsComponent
+    ToastsComponent,
   ],
   imports: [
     BrowserModule,
