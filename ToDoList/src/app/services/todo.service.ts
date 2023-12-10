@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap, tap } from 'rxjs';
 import { StateTodoStatus, TodoItem, TodoItemAdd, TodoItemStatus } from '../models';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class TodoService {
       text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, nesciunt.',
       description: 'Description second task',
       id: 2,
-      status: TodoItemStatus.COMPLETED
+      status: TodoItemStatus.ACTIVE
     }
   ]);
   private stateSelectedItemId: BehaviorSubject<number | null> = new BehaviorSubject<null | number>(null);
@@ -38,16 +38,19 @@ export class TodoService {
   public todos$: Observable<TodoItem[]> = this.stateTodos.asObservable();
 
   /** Все задачи, отфильтрованные по текущему статусу */
-  public todosFilteredByStatus$: Observable<TodoItem[]> = this.stateTodos.pipe(
-    map((stateTodos) => {
+  public todosFilteredByStatus$: Observable<TodoItem[]> = this.stateTodoStatus.pipe(
+    switchMap(() => this.todos$),
+    map(() => {
       const newStatus: any = this.stateTodoStatus.value;
 
-      return stateTodos.filter(todo => {
+      const arr = this.stateTodos.value.filter(todo => {
         if (newStatus === StateTodoStatus.ALL) return true;
         if (newStatus !== todo.status) return false;
 
         return true;
       });
+
+      return arr;
     })
   );
 
@@ -55,6 +58,7 @@ export class TodoService {
   constructor() { }
 
   public setStatus(stateTodoStatus: StateTodoStatus): void {
+    // if (this.stateTodoStatus.value === stateTodoStatus) return;
     this.stateTodoStatus.next(stateTodoStatus);
   }
 
@@ -92,15 +96,35 @@ export class TodoService {
 
   public delete(id: number): void {
     const lastStateTodos = this.stateTodos.value;
-    const filteredTodos = lastStateTodos.filter(todo => todo.id !== id);
-    const currentSelectedId = this.stateSelectedItemId.value;
+    const findedTodoIdx = lastStateTodos.findIndex((stateTodo) => id === stateTodo.id);
 
-    if (currentSelectedId === id) this.stateSelectedItemId.next(null);
-    this.stateTodos.next(filteredTodos);
+    if (findedTodoIdx === -1) return;
+
+    lastStateTodos[findedTodoIdx] = {
+      ...lastStateTodos[findedTodoIdx],
+      status: TodoItemStatus.COMPLETED
+    };
+
+    this.stateTodos.next(lastStateTodos);
+
+
+    // const filteredTodos = lastStateTodos.filter(todo => todo.id !== id);
+    // const currentSelectedId = this.stateSelectedItemId.value;
+
+    // if (currentSelectedId === id) this.stateSelectedItemId.next(null);
+    // this.stateTodos.next(filteredTodos);
   }
 
   public select(id: number): void {
     this.stateSelectedItemId.next(id);
+  }
+
+  public getAllStatus(): StateTodoStatus[] {
+    return [ StateTodoStatus.ALL, StateTodoStatus.ACTIVE, StateTodoStatus.COMPLETED ];
+  }
+
+  public getCurrentStatus(): StateTodoStatus {
+    return this.stateTodoStatus.value;
   }
 
   private findById(id: number): TodoItem | null {

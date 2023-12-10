@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {TodoItem} from "../../models";
-import {SharedModule} from "../../shared/shared.module";
 import { TodoService } from 'src/app/services/todo.service';
 import { ToastService } from 'src/app/services/toast.service';
 

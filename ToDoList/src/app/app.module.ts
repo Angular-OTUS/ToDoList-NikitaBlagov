@@ -13,6 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SharedModule } from './shared/shared.module';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { ToastsComponent } from './components/toasts/toasts.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ToastsComponent } from './components/toasts/toasts.component';
     MatInputModule,
     MatFormFieldModule,
     MatProgressSpinnerModule,
-    SharedModule
+    SharedModule,
+    MatButtonToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
