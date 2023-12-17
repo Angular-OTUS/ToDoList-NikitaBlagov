@@ -10,5 +10,6 @@ export class ButtonComponent {
   @Input() disabled: boolean = false;
   @Input() green: boolean = false;
   @Input() red: boolean = false;
+  @Input() hidden: boolean = false;
 
 }

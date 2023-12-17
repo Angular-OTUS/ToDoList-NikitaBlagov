@@ -26,7 +26,6 @@
                   'selected': item.id === observables.selectedItemId
                 }"
                 [todoItem]="item"
-                (click)="clickItem(item)"
                 (delete)="deleteItem($event)"
               ></app-todolist-item>
             </ng-container>

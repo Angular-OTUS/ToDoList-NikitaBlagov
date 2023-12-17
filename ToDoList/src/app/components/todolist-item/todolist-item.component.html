@@ -20,11 +20,12 @@
   </ng-container>
 
 </div> -->
-
-<div
-  class="todolist-item"
-  (dblclick)="setEditMode(true)"
->
+<ng-container *ngIf="todoItem !== null">
+  <div
+    class="todolist-item"
+    (click)="clickItem(todoItem)"
+    (dblclick)="setEditMode(true)"
+  >
 
     <div
       class="todolist-item__content"
@@ -34,6 +35,7 @@
     >
       <span>{{todoItem.id}} {{todoItem.text}}</span>
         <shared-button
+          [hidden]="todoItem.status === 'COMPLETED'"
           [tooltip]="'Нажмите для удаления задачи'"
           (click)="deleteItem(todoItem.id)"
           (click)="onDeleteTodo()"
@@ -54,4 +56,5 @@
       <button (click)="saveEditItem()">Save</button>
     </div>
 
-</div>
+  </div>
+</ng-container>

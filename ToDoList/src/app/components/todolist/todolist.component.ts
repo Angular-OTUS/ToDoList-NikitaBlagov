@@ -34,7 +34,7 @@ export class TodolistComponent implements OnInit {
   ngOnInit(): void  {
     setTimeout(() => {
       this.isLoading = false;
-    }, 2500);
+    }, 500);
 
     // console.log(1);
 
@@ -58,10 +58,6 @@ export class TodolistComponent implements OnInit {
 
     this.form.controls.textInput.setValue('');
     this.form.controls.textarea.setValue('');
-  }
-
-  public clickItem(todoItem: TodoItem): void {
-    this.todoService.select(todoItem.id);
   }
 
   public onAddTodo(): void {
