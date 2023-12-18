@@ -26,7 +26,7 @@
                   'selected': item.id === observables.selectedItemId
                 }"
                 [todoItem]="item"
-                (delete)="deleteItem($event)"
+
               ></app-todolist-item>
             </ng-container>
 
@@ -43,36 +43,36 @@
 
   </div> <!-- .task-wrapper -->
 
-  <form
-    class="input-container"
-    [formGroup]="form"
-    (submit)="addItem()"
-  >
+<!--  <form-->
+<!--    class="input-container"-->
+<!--    [formGroup]="form"-->
+<!--    (submit)="addItem()"-->
+<!--  >-->
 
-    <mat-form-field appearance="fill">
-      <mat-label>Название задачи</mat-label>
-      <input
-        type="text"
-        formControlName="textInput"
-        matInput
-      >
-    </mat-form-field>
+<!--    <mat-form-field appearance="fill">-->
+<!--      <mat-label>Название задачи</mat-label>-->
+<!--      <input-->
+<!--        type="text"-->
+<!--        formControlName="textInput"-->
+<!--        matInput-->
+<!--      >-->
+<!--    </mat-form-field>-->
 
-    <mat-form-field appearance="fill">
-      <mat-label>Описание задачи</mat-label>
-      <textarea matInput formControlName="textarea"></textarea>
-    </mat-form-field>
+<!--    <mat-form-field appearance="fill">-->
+<!--      <mat-label>Описание задачи</mat-label>-->
+<!--      <textarea matInput formControlName="textarea"></textarea>-->
+<!--    </mat-form-field>-->
 
-    <shared-button
-      [tooltip]="'Нажмите для добавления задачи'"
-      [green]="true"
-      [disabled]="!form.valid"
-      [type]="'submit'"
-      (click)="addItem()"
-      (click)="onAddTodo()"
-    >
-      Add
-    </shared-button>
-  </form>
+<!--    <shared-button-->
+<!--      [tooltip]="'Нажмите для добавления задачи'"-->
+<!--      [green]="true"-->
+<!--      [disabled]="!form.valid"-->
+<!--      [type]="'submit'"-->
+<!--      (click)="addItem()"-->
+<!--      (click)="onAddTodo()"-->
+<!--    >-->
+<!--      Add-->
+<!--    </shared-button>-->
+<!--  </form>-->
 </div> <!-- .todolist -->
 

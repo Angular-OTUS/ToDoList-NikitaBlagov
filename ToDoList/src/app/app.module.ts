@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TodolistComponent } from './components/todolist/todolist.component';
@@ -14,7 +13,8 @@ import { SharedModule } from './shared/shared.module';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { ToastsComponent } from './components/toasts/toasts.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-
+import {TodoCreateItemComponent} from "./components/todo-create-item/todo-create-item.component";
+;
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +22,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     TodolistItemComponent,
     TooltipComponent,
     ToastsComponent,
+    TodoCreateItemComponent
   ],
   imports: [
     BrowserModule,

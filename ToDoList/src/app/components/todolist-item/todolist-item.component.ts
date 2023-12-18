@@ -30,6 +30,10 @@ export class TodolistItemComponent implements OnChanges {
     this.delete.emit(itemId);
   }
 
+  public deleteItems(itemId: number): void {
+    this.todoService.delete(itemId);
+  }
+
   public setEditMode(bool: boolean): void {
     if (this.allowedToEdit === false) return;
 

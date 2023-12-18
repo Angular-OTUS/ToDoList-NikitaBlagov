@@ -40,11 +40,11 @@ export class TodolistComponent implements OnInit {
 
   }
 
-  public deleteItem(itemId: number): void {
-    this.todoService.delete(itemId);
-  }
+  // public deleteItem(itemId: number): void {
+  //   this.todoService.delete(itemId);
+  // }
 
-  public  addItem(): void {
+  public addItem(): void {
     const text = this.form.controls.textInput.value as string;
     const description = this.form.controls.textarea.value as string;
 

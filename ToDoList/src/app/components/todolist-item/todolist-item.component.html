@@ -38,6 +38,7 @@
           [hidden]="todoItem.status === 'COMPLETED'"
           [tooltip]="'Нажмите для удаления задачи'"
           (click)="deleteItem(todoItem.id)"
+          (click)="deleteItems(todoItem.id)"
           (click)="onDeleteTodo()"
           [red]="true"
         >

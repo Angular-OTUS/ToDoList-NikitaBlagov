@@ -108,7 +108,7 @@ export class TodoService {
     this.stateTodos.next(lastStateTodos);
 
     if (this.stateSelectedItemId.value === id) {
-      this.stateSelectedItemId.next(null)
+      this.stateSelectedItemId.next(null);
     }
     // удалять выбранный элемент, если выбран такой же элемент, который удаляют
     // const filteredTodos = lastStateTodos.filter(todo => todo.id !== id);
