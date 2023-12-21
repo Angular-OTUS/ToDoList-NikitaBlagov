@@ -67,7 +67,6 @@ export class TodoService {
     const maxId = Math.max(...lastStateTodos.map(item => item.id), 0);
     const newTodo = {
       ...todo,
-      status: TodoItemStatus.ACTIVE,
       id: maxId + 1
     };
 

@@ -24,8 +24,7 @@ export class TodolistComponent implements OnInit {
   private countCallsGetDefaultBtnStatus: number = 0;
 
   constructor(
-    private todoService: TodoService,
-    private toastService: ToastService
+    private todoService: TodoService
   ) {}
 
 
@@ -38,30 +37,6 @@ export class TodolistComponent implements OnInit {
 
     // console.log(1);
 
-  }
-
-  // public deleteItem(itemId: number): void {
-  //   this.todoService.delete(itemId);
-  // }
-
-  public addItem(): void {
-    const text = this.form.controls.textInput.value as string;
-    const description = this.form.controls.textarea.value as string;
-
-    this.todoService.add({
-      text: text,
-      description: description
-    });
-
-    console.log('addItem');
-
-
-    this.form.controls.textInput.setValue('');
-    this.form.controls.textarea.setValue('');
-  }
-
-  public onAddTodo(): void {
-    this.toastService.showToast('Задача добавлена');
   }
 
   public clickBtnStatus(status: StateTodoStatus): void {

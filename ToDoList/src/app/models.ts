@@ -10,13 +10,15 @@ export enum StateTodoStatus {
 }
 
 export interface TodoItem {
+	id: number;
   text: string;
   description: string;
-  id: number;
   status: TodoItemStatus
 }
 
 export interface TodoItemAdd {
   text: string;
   description: string;
+	status: TodoItemStatus
 }
+

@@ -1,0 +1,22 @@
+{
+  "todos": [
+    {
+      "status": "ACTIVE",
+      "text": "ghbdtn ghbdtn",
+      "description": "описание",
+      "id": 3
+    },
+    {
+      "status": "ACTIVE",
+      "text": "текст",
+      "description": "описание",
+      "id": 4
+    },
+    {
+      "status": "ACTIVE",
+      "text": "ghbdtn ghbdtn",
+      "description": "описание",
+      "id": 5
+    }
+  ]
+}

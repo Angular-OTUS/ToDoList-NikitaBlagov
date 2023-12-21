@@ -14,6 +14,7 @@ import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { ToastsComponent } from './components/toasts/toasts.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {TodoCreateItemComponent} from "./components/todo-create-item/todo-create-item.component";
+import { HttpClientModule } from '@angular/common/http';
 ;
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {TodoCreateItemComponent} from "./components/todo-create-item/todo-create
     MatProgressSpinnerModule,
     SharedModule,
     MatButtonToggleModule,
+		HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
