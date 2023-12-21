@@ -1,0 +1,17 @@
+.todo-create-item {
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field {
+  max-width: 350px;
+}
+
+shared-button {
+  padding-left: auto;
+}

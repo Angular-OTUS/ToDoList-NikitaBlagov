@@ -2,73 +2,46 @@
 <div class="todolist">
   <h1>Todo List</h1>
 
-  <ng-container *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
-  </ng-container>
-  <ng-container *ngIf="!isLoading">
+  <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="getDefaultBtnStatus()">
+    <ng-container *ngFor="let status of allStatus">
+      <mat-button-toggle
+        (click)="clickBtnStatus(status)"
+        [value]="status"
+      >{{ status }}</mat-button-toggle>
+    </ng-container>
+    <!-- <mat-button-toggle value="bold">Active</mat-button-toggle>
+    <mat-button-toggle value="italic"></mat-button-toggle>
+    <mat-button-toggle value="underline">Underline</mat-button-toggle> -->
+  </mat-button-toggle-group>
 
-    <div class="task-wrapper">
-      <ul class="task-list">
-        <ng-container *ngIf="todos$ | async as todos">
-          <ng-container *ngFor="let item of todos">
-            <li>
+  <div class="task-wrapper" [loading]="isLoading">
+    <ul class="task-list">
+      <ng-container *ngIf="todos$ | async as todos">
+        <ng-container *ngFor="let item of todos">
+          <li>
 
-              <ng-container *ngIf="{ selectedItemId: (selectedItemId$ | async) } as observables">
-                <app-todolist-item
-                  [ngClass]="{
-                    'selected': item.id === observables.selectedItemId
-                  }"
-                  [todoItem]="item"
-                  (click)="clickItem(item)"
-                  (delete)="deleteItem($event)"
-                ></app-todolist-item>
-              </ng-container>
+            <ng-container *ngIf="{ selectedItemId: (selectedItemId$ | async) } as observables">
+              <app-todolist-item
+                [ngClass]="{
+                  'selected': item.id === observables.selectedItemId
+                }"
+                [todoItem]="item"
 
-            </li>
-          </ng-container>
+              ></app-todolist-item>
+            </ng-container>
+
+          </li>
         </ng-container>
-      </ul> <!-- .task-list -->
+      </ng-container>
+    </ul> <!-- .task-list -->
 
-      <div class="task-description">
-        <ng-container *ngIf="selectedItemDescription$ | async as selectedItemDescription">
-          {{ selectedItemDescription }}
-        </ng-container>
-      </div>
+    <div class="task-description">
+      <ng-container *ngIf="selectedItemDescription$ | async as selectedItemDescription">
+        {{ selectedItemDescription }}
+      </ng-container>
+    </div>
 
-    </div> <!-- .task-wrapper -->
+  </div> <!-- .task-wrapper -->
 
-    <form
-      class="input-container"
-      [formGroup]="form"
-      (submit)="addItem()"
-    >
-
-      <mat-form-field appearance="fill">
-        <mat-label>Название задачи</mat-label>
-        <input
-          type="text"
-          formControlName="textInput"
-          matInput
-        >
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Описание задачи</mat-label>
-        <textarea matInput formControlName="textarea"></textarea>
-      </mat-form-field>
-
-      <shared-button
-        [tooltip]="'Нажмите для добавления задачи'"
-        [title]="'Add'"
-        [green]="true"
-        [disabled]="!form.valid"
-        [type]="'submit'"
-        (click)="addItem()"
-        (click)="onAddTodo()"
-      >
-      </shared-button>
-    </form>
-
-  </ng-container>
 </div> <!-- .todolist -->
 

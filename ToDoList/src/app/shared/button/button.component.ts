@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import {SharedModule} from "../shared.module";
 
 @Component({
   selector: 'shared-button',
@@ -7,9 +6,10 @@ import {SharedModule} from "../shared.module";
   styleUrls: ['./button.component.scss'],
 })
 export class ButtonComponent {
-  @Input() title: string = '';
   @Input() type: string = 'button';
   @Input() disabled: boolean = false;
   @Input() green: boolean = false;
+  @Input() red: boolean = false;
+  @Input() hidden: boolean = false;
 
 }
