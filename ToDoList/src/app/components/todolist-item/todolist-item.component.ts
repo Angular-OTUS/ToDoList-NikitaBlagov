@@ -44,7 +44,7 @@ export class TodolistItemComponent implements OnChanges {
     if (this.todoItem === null) return;
 
     this.setEditMode(false);
-    this.todoService.edit(this.todoItem)
+    this.todoService.edit(this.todoItem).subscribe();
     this.toastService.showToast('Задача изменена');
   }
 

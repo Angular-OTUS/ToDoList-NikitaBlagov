@@ -29,7 +29,7 @@ export class TodoCreateItemComponent {
       text: text,
       description: description,
 			status: TodoItemStatus.ACTIVE
-    });
+    }).subscribe();
 
     this.form.controls.textInput.setValue('');
     this.form.controls.textarea.setValue('');
