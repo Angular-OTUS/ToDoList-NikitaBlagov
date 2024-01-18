@@ -86,29 +86,52 @@ export class TodoService {
 
   }
 
-  public delete(id: number): void {
-    const lastStateTodos = this.stateTodos.value;
-    const findedTodoIdx = lastStateTodos.findIndex((stateTodo) => id === stateTodo.id);
+  // public delete(id: number): void {
+  //   const lastStateTodos = this.stateTodos.value;
+  //   const findedTodoIdx = lastStateTodos.findIndex((stateTodo) => id === stateTodo.id);
 
-    if (findedTodoIdx === -1) return;
+  //   if (findedTodoIdx === -1) return;
 
-    lastStateTodos[findedTodoIdx] = {
-      ...lastStateTodos[findedTodoIdx],
-      status: TodoItemStatus.COMPLETED
-    };
+  //   lastStateTodos[findedTodoIdx] = {
+  //     ...lastStateTodos[findedTodoIdx],
+  //     status: TodoItemStatus.COMPLETED
+  //   };
 
-    this.stateTodos.next(lastStateTodos);
+  //   this.stateTodos.next(lastStateTodos);
 
-    if (this.stateSelectedItemId.value === id) {
-      this.stateSelectedItemId.next(null);
-    }
-    // удалять выбранный элемент, если выбран такой же элемент, который удаляют
-    // const filteredTodos = lastStateTodos.filter(todo => todo.id !== id);
-    // const currentSelectedId = this.stateSelectedItemId.value;
+  //   if (this.stateSelectedItemId.value === id) {
+  //     this.stateSelectedItemId.next(null);
+  //   }
+  //   // удалять выбранный элемент, если выбран такой же элемент, который удаляют
+  //   // const filteredTodos = lastStateTodos.filter(todo => todo.id !== id);
+  //   // const currentSelectedId = this.stateSelectedItemId.value;
 
-    // if (currentSelectedId === id) this.stateSelectedItemId.next(null);
-    // this.stateTodos.next(filteredTodos);
-  }
+  //   // if (currentSelectedId === id) this.stateSelectedItemId.next(null);
+  //   // this.stateTodos.next(filteredTodos);
+  // }
+
+	public delete(id: number): Observable<void> {
+
+		return this.todoHttpService.deleteById(id).pipe(
+			tap(() => {
+				const lastStateTodos = this.stateTodos.value;
+				const findedTodoIdx = lastStateTodos.findIndex((todo) => todo.id === id);
+
+				if (findedTodoIdx === -1) return;
+
+				lastStateTodos.splice(findedTodoIdx, 1);
+
+				this.stateTodos.next(lastStateTodos);
+
+				if (this.stateSelectedItemId.value === id) {
+					this.stateSelectedItemId.next(null);
+				}
+
+			})
+		)
+
+	}
+
 
   public select(id: number): void {
     this.stateSelectedItemId.next(id);
@@ -148,6 +171,10 @@ export class TodoService {
     };
 
     this.stateTodos.next(lastStateTodos);
+	}
+
+	private _deleteNotServer(deleteTodo: TodoItem): void {
+
 	}
 
 

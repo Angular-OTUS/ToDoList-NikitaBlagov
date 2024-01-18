@@ -1,28 +1,10 @@
 {
   "todos": [
     {
+      "text": "Первая задача",
+      "description": "Описание \"Работает норм\"",
       "status": "ACTIVE",
-      "text": "123",
-      "description": "123",
-      "id": 3
-    },
-    {
-      "status": "ACTIVE",
-      "text": "привет",
-      "description": "описание",
-      "id": 4
-    },
-    {
-      "status": "ACTIVE",
-      "text": "ghbdtn ghbdtn",
-      "description": "описание",
-      "id": 5
-    },
-    {
-      "text": "sada",
-      "description": "asdada",
-      "status": "ACTIVE",
-      "id": 6
+      "id": 1
     }
   ]
 }

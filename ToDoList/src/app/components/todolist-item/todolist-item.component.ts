@@ -31,7 +31,7 @@ export class TodolistItemComponent implements OnChanges {
   }
 
   public deleteItems(itemId: number): void {
-    this.todoService.delete(itemId);
+    this.todoService.delete(itemId).subscribe();
   }
 
   public setEditMode(bool: boolean): void {
@@ -49,6 +49,7 @@ export class TodolistItemComponent implements OnChanges {
   }
 
   public onDeleteTodo(): void {
+
     this.toastService.showToast('Задача удалена');
   }
 

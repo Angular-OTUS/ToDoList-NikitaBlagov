@@ -12,7 +12,9 @@ export class TodoHttpService {
 
   constructor(
 		private readonly http: HttpClient
-	) { }
+	) {
+
+	}
 
 	getById(id: number): Observable<TodoItem | null> {
 		return this.http.get<TodoItem | null>(`${this.url}/${id}`)
@@ -33,16 +35,27 @@ export class TodoHttpService {
 			);
 	}
 
-	deleteById(id: number): Observable<null | boolean> {
-		return this.http.delete<{}>(`${this.url}/${id}`)
+	// deleteById(id: number): Observable<null | boolean> {
+	// 	return this.http.delete<{}>(`${this.url}/${id}`)
+	// 		.pipe(
+	// 			map(() => {
+	// 				return true;
+	// 			}),
+	// 			catchError((err) => {
+	// 				return of(null);
+	// 			})
+	// 		);
+	// }
+
+	deleteById(id: number): Observable<any> {
+
+		return this.http.delete(`${this.url}/${id}`)
 			.pipe(
-				map(() => {
-					return true;
-				}),
-				catchError((err) => {
+				catchError(err => {
 					return of(null);
 				})
 			);
+
 	}
 
 	create(todo: TodoItemAdd): Observable<TodoItem | null> {
@@ -64,3 +77,9 @@ export class TodoHttpService {
 	}
 
 }
+
+
+// Observable<null | boolean>
+
+
+
