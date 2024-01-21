@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, of, switchMap, tap } from 'rxjs';
 import { StateTodoStatus, TodoItem, TodoItemAdd, TodoItemStatus } from '../models';
 import { TodoHttpService } from './todo-http.service';
 
@@ -16,7 +16,7 @@ export class TodoService {
   private stateSelectedItemId: BehaviorSubject<number | null> = new BehaviorSubject<null | number>(null);
   private selectedItem$: Observable<TodoItem | null> = this.stateSelectedItemId
     .pipe(
-      map(selectedItemId => this.findById(selectedItemId as number))
+      map(selectedItemId => this._findByIdNotServer(selectedItemId as number))
     );
 
   public selectedItemId$: Observable<number | null> = this.stateSelectedItemId.asObservable();
@@ -56,8 +56,8 @@ export class TodoService {
 		).subscribe();
 	}
 
-  public setStatus(stateTodoStatus: StateTodoStatus): void {
-    // if (this.stateTodoStatus.value === stateTodoStatus) return;
+	/** Установить статус для всего списка задач */
+  public setStatusForStateTodoStatus(stateTodoStatus: StateTodoStatus): void {
     this.stateTodoStatus.next(stateTodoStatus);
   }
 
@@ -82,36 +82,36 @@ export class TodoService {
 					this._editNotServer(serverEditedTodo);
 				}
 			})
-		)
-
+		);
   }
 
-  // public delete(id: number): void {
-  //   const lastStateTodos = this.stateTodos.value;
-  //   const findedTodoIdx = lastStateTodos.findIndex((stateTodo) => id === stateTodo.id);
+	public setStatusCompletedForTask(editedTodo: TodoItem): Observable<TodoItem | null> {
+		if (editedTodo.status === TodoItemStatus.COMPLETED) return of(null);
 
-  //   if (findedTodoIdx === -1) return;
+		return this.edit({
+			...editedTodo,
+			status: TodoItemStatus.COMPLETED
+		});
+	}
 
-  //   lastStateTodos[findedTodoIdx] = {
-  //     ...lastStateTodos[findedTodoIdx],
-  //     status: TodoItemStatus.COMPLETED
-  //   };
 
-  //   this.stateTodos.next(lastStateTodos);
+  public select(id: number): void {
+		if (id === this.stateSelectedItemId.value) {
+			this.stateSelectedItemId.next(null);
+			return;
+		}
+    this.stateSelectedItemId.next(id);
+  }
 
-  //   if (this.stateSelectedItemId.value === id) {
-  //     this.stateSelectedItemId.next(null);
-  //   }
-  //   // удалять выбранный элемент, если выбран такой же элемент, который удаляют
-  //   // const filteredTodos = lastStateTodos.filter(todo => todo.id !== id);
-  //   // const currentSelectedId = this.stateSelectedItemId.value;
+  public getAllStatus(): StateTodoStatus[] {
+    return [ StateTodoStatus.ALL, StateTodoStatus.ACTIVE, StateTodoStatus.COMPLETED ];
+  }
 
-  //   // if (currentSelectedId === id) this.stateSelectedItemId.next(null);
-  //   // this.stateTodos.next(filteredTodos);
-  // }
+  public getCurrentStatus(): StateTodoStatus {
+    return this.stateTodoStatus.value;
+  }
 
-	public delete(id: number): Observable<void> {
-
+	private _delete(id: number): Observable<void> {
 		return this.todoHttpService.deleteById(id).pipe(
 			tap(() => {
 				const lastStateTodos = this.stateTodos.value;
@@ -128,29 +128,19 @@ export class TodoService {
 				}
 
 			})
-		)
-
+		);
 	}
 
-
-  public select(id: number): void {
-    this.stateSelectedItemId.next(id);
-  }
-
-  public getAllStatus(): StateTodoStatus[] {
-    return [ StateTodoStatus.ALL, StateTodoStatus.ACTIVE, StateTodoStatus.COMPLETED ];
-  }
-
-  public getCurrentStatus(): StateTodoStatus {
-    return this.stateTodoStatus.value;
-  }
-
-  private findById(id: number): TodoItem | null {
+  private _findByIdNotServer(id: number): TodoItem | null {
     const findedTodoIdx = this.stateTodos.value.findIndex((stateTodo) => id === stateTodo.id);
 
     if (findedTodoIdx === -1) return null;
     return this.stateTodos.value[findedTodoIdx];
   }
+
+	private _getAllNotServer(): TodoItem[] {
+		return this.stateTodos.value;
+	}
 
 	/** Редактирует только внутреннее хранилище this.stateTodos */
 	private _editNotServer(editedTodo: TodoItem): void {
@@ -160,7 +150,8 @@ export class TodoService {
     if (findedTodoIdx === -1) return;
     if (
       editedTodo.description === lastStateTodos[findedTodoIdx].description &&
-      editedTodo.text === lastStateTodos[findedTodoIdx].text
+      editedTodo.text === lastStateTodos[findedTodoIdx].text &&
+			editedTodo.status === lastStateTodos[findedTodoIdx].status
     ) return;
 
     lastStateTodos[findedTodoIdx] = {

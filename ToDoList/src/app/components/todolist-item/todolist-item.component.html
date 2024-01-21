@@ -20,42 +20,44 @@
   </ng-container>
 
 </div> -->
-<ng-container *ngIf="todoItem !== null">
-  <div
-    class="todolist-item"
-    (click)="clickItem(todoItem)"
-    (dblclick)="setEditMode(true)"
-  >
 
-    <div
-      class="todolist-item__content"
-      [ngClass]="{
-        'todolist-item__content_active': !isEdit
-      }"
-    >
-      <span>{{todoItem.id}} {{todoItem.text}}</span>
-        <shared-button
-          [hidden]="todoItem.status === 'COMPLETED'"
-          [tooltip]="'Нажмите для удаления задачи'"
-          (click)="deleteItem(todoItem.id)"
-          (click)="deleteItems(todoItem.id)"
-          (click)="onDeleteTodo()"
-          [red]="true"
-        >
-          Delete
-        </shared-button>
-    </div>
+<ng-container *ngIf="stateIsEdit$ | async as stateIsEdit">
 
-    <div
-      class="todolist-item__content"
-      [ngClass]="{
-        'todolist-item__content_active': isEdit
-      }"
-    >
-      <input [(ngModel)]="todoItem.text" (blur)="saveEditItem()">
+	<div
+		class="todolist-item"
+		(click)="clickItem(todoItem)"
+		(dblclick)="setEditMode(true)"
+	>
 
-      <button (click)="saveEditItem()">Save</button>
-    </div>
+		<div
+			class="todolist-item__content"
+			[ngClass]="{
+				'todolist-item__content_active': !stateIsEdit.isEdit
+			}"
+		>
+			<span>{{todoItem.id}} {{todoItem.text}}</span>
+				<shared-button
+					[hidden]="todoItem.status === 'COMPLETED'"
+					[tooltip]="'Нажмите для удаления задачи'"
+					(click)="deleteTodo()"
+					[red]="true"
+				>
+					Delete
+				</shared-button>
+		</div>
 
-  </div>
+			<div
+				class="todolist-item__content"
+				[ngClass]="{
+					'todolist-item__content_active': stateIsEdit.isEdit
+				}"
+			>
+				<input [(ngModel)]="todoItem.text" (blur)="saveEditItem()">
+
+				<button (click)="saveEditItem()">Save</button>
+			</div>
+
+	</div>
+
 </ng-container>
+

@@ -40,7 +40,7 @@ export class TodolistComponent implements OnInit {
   }
 
   public clickBtnStatus(status: StateTodoStatus): void {
-    this.todoService.setStatus(status);
+    this.todoService.setStatusForStateTodoStatus(status);
 
   }
 
@@ -49,7 +49,7 @@ export class TodolistComponent implements OnInit {
     if (this.countCallsGetDefaultBtnStatus !== 1) return this.todoService.getCurrentStatus();
     const defaultStatus = StateTodoStatus.ACTIVE;
 
-    this.todoService.setStatus(defaultStatus);
+    this.todoService.setStatusForStateTodoStatus(defaultStatus);
 
     return defaultStatus;
   }

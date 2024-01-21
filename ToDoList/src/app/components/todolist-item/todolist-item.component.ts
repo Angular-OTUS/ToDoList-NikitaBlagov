@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import {TodoItem} from "../../models";
 import { TodoService } from 'src/app/services/todo.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-todolist-item',
@@ -10,9 +11,8 @@ import { ToastService } from 'src/app/services/toast.service';
 
 })
 export class TodolistItemComponent implements OnChanges {
-  @Input({ required: true }) public todoItem: TodoItem | null = null;
-  @Output() public delete: EventEmitter<number> = new EventEmitter<number>();
-  public isEdit: boolean = false;
+  @Input({ required: true }) public todoItem!: TodoItem;
+  public stateIsEdit$ = new BehaviorSubject({ isEdit: false });
   public allowedToEdit: boolean = false;
 
   constructor(
@@ -21,36 +21,31 @@ export class TodolistItemComponent implements OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if ('todoItem' in changes && this.todoItem !== null) {
+    if ('todoItem' in changes) {
       this.allowedToEdit = this.todoItem.status === 'ACTIVE';
     }
-  }
-
-  public deleteItem(itemId: number): void {
-    this.delete.emit(itemId);
-  }
-
-  public deleteItems(itemId: number): void {
-    this.todoService.delete(itemId).subscribe();
   }
 
   public setEditMode(bool: boolean): void {
     if (this.allowedToEdit === false) return;
 
-    this.isEdit = bool;
+    this.stateIsEdit$.next({ isEdit: bool });
   }
 
   public saveEditItem(): void {
-    if (this.todoItem === null) return;
-
     this.setEditMode(false);
     this.todoService.edit(this.todoItem).subscribe();
     this.toastService.showToast('Задача изменена');
   }
 
-  public onDeleteTodo(): void {
+  public deleteTodo(): void {
+		this.todoService.setStatusCompletedForTask(this.todoItem).subscribe((editedTodo) => {
+			if (editedTodo === null) return;
+			this.setEditMode(false);
+			console.log(this.stateIsEdit$.value);
 
-    this.toastService.showToast('Задача удалена');
+			this.toastService.showToast('Задача удалена');
+		});
   }
 
   public clickItem(todoItem: TodoItem): void {
