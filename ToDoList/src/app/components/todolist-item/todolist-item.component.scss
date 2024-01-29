@@ -2,7 +2,7 @@
   display: block;
 }
 
-:host.selected {
+.todolist-item__selected {
   background-color: rgb(97, 255, 97);
 }
 

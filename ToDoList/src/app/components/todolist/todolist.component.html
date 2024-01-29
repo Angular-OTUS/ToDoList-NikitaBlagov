@@ -19,17 +19,7 @@
       <ng-container *ngIf="todos$ | async as todos">
         <ng-container *ngFor="let item of todos">
           <li>
-
-            <ng-container *ngIf="{ selectedItemId: (selectedItemId$ | async) } as observables">
-              <app-todolist-item
-                [ngClass]="{
-                  'selected': item.id === observables.selectedItemId
-                }"
-                [todoItem]="item"
-
-              ></app-todolist-item>
-            </ng-container>
-
+            <app-todolist-item [todoItem]="item"></app-todolist-item>
           </li>
         </ng-container>
       </ng-container>

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import {TodoItem} from "../../models";
 import { TodoService } from 'src/app/services/todo.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-todolist-item',
@@ -14,6 +14,7 @@ export class TodolistItemComponent implements OnChanges {
   @Input({ required: true }) public todoItem!: TodoItem;
   public stateIsEdit$ = new BehaviorSubject({ isEdit: false });
   public allowedToEdit: boolean = false;
+	public selectedItemId$: Observable<number | null> = this.todoService.selectedItemId$;
 
   constructor(
     private todoService: TodoService,
@@ -52,6 +53,8 @@ export class TodolistItemComponent implements OnChanges {
     if (this.allowedToEdit === false) return;
     this.todoService.select(todoItem.id);
   }
+
+
 
 
 }
