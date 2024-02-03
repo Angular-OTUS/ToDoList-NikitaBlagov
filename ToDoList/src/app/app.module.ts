@@ -12,9 +12,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SharedModule } from './shared/shared.module';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { ToastsComponent } from './components/toasts/toasts.component';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {TodoCreateItemComponent} from "./components/todo-create-item/todo-create-item.component";
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { TodoCreateItemComponent } from "./components/todo-create-item/todo-create-item.component";
 import { HttpClientModule } from '@angular/common/http';
+import { PageTasksComponent } from './pages/page-tasks/page-tasks.component';
+import { TodoItemViewComponent } from './components/todo-item-view/todo-item-view.component';
 ;
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { HttpClientModule } from '@angular/common/http';
     TodolistItemComponent,
     TooltipComponent,
     ToastsComponent,
-    TodoCreateItemComponent
+    TodoCreateItemComponent,
+		PageTasksComponent,
+  TodoItemViewComponent
   ],
   imports: [
     BrowserModule,

@@ -1,17 +1,9 @@
-.todo-create-item {
+.form {
   display: flex;
   flex-direction: column;
+	max-width: 350px;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-mat-form-field {
-  max-width: 350px;
-}
-
-shared-button {
-  padding-left: auto;
+.btn-add {
+	align-self: center;
 }

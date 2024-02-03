@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import {TodoItem} from "../../models";
 import { TodoService } from 'src/app/services/todo.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -8,6 +8,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   selector: 'app-todolist-item',
   templateUrl: './todolist-item.component.html',
   styleUrls: ['./todolist-item.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 
 })
 export class TodolistItemComponent implements OnChanges {
@@ -39,22 +40,21 @@ export class TodolistItemComponent implements OnChanges {
     this.toastService.showToast('Задача изменена');
   }
 
-  public deleteTodo(): void {
-		this.todoService.setStatusCompletedForTask(this.todoItem).subscribe((editedTodo) => {
-			if (editedTodo === null) return;
-			this.setEditMode(false);
-			console.log(this.stateIsEdit$.value);
-
-			this.toastService.showToast('Задача удалена');
-		});
-  }
-
-  public clickItem(todoItem: TodoItem): void {
+	public clickItem(todoItem: TodoItem): void {
     if (this.allowedToEdit === false) return;
     this.todoService.select(todoItem.id);
   }
 
+  public deleteTodo(_event: any): void {
+		const event = _event as PointerEvent;
 
+		event.stopPropagation();
 
+		this.todoService.setStatusCompletedForTask(this.todoItem).subscribe((editedTodo) => {
+			if (editedTodo === null) return;
+			this.setEditMode(false);
+			this.toastService.showToast('Задача удалена');
+		});
+  }
 
 }

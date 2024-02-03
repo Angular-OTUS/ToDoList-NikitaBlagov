@@ -14,24 +14,26 @@
     <mat-button-toggle value="underline">Underline</mat-button-toggle> -->
   </mat-button-toggle-group>
 
-  <div class="task-wrapper" [loading]="isLoading">
-    <ul class="task-list">
-      <ng-container *ngIf="todos$ | async as todos">
-        <ng-container *ngFor="let item of todos">
-          <li>
-            <app-todolist-item [todoItem]="item"></app-todolist-item>
-          </li>
-        </ng-container>
-      </ng-container>
-    </ul> <!-- .task-list -->
+	<ng-container *ngIf="isLoadingState$ | async as isLoadingState">
+		<div class="task-wrapper" [loading]="isLoadingState.isLoading">
+			<ul class="task-list">
+				<ng-container *ngIf="todos$ | async as todos">
+					<ng-container *ngFor="let item of todos">
+						<li>
+							<app-todolist-item [todoItem]="item"></app-todolist-item>
+						</li>
+					</ng-container>
+				</ng-container>
+			</ul> <!-- .task-list -->
 
-    <div class="task-description">
-      <ng-container *ngIf="selectedItemDescription$ | async as selectedItemDescription">
-        {{ selectedItemDescription }}
-      </ng-container>
-    </div>
-
-  </div> <!-- .task-wrapper -->
+			<!-- <div class="task-description">
+				<ng-container *ngIf="selectedItemDescription$ | async as selectedItemDescription">
+					{{ selectedItemDescription }}
+				</ng-container>
+			</div> -->
+			<router-outlet></router-outlet>
+		</div> <!-- .task-wrapper -->
+	</ng-container>
 
 </div> <!-- .todolist -->
 

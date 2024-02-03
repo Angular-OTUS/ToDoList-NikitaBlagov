@@ -1,26 +1,3 @@
-<!-- <div
-  class="todolist-item"
-  (dblclick)="setEditMode(true)"
->
-
-  <ng-container *ngIf="!isEdit">
-    <div class="todolist-item__content">
-      <span>{{todoItem.id}} {{todoItem.text}}</span>
-      <button class="delete-btn" [tooltip]="'Нажмите для добавления удаления задачи'"
-        (click)="deleteItem(todoItem.id)">Delete</button>
-    </div>
-  </ng-container>
-
-  <ng-container *ngIf="isEdit">
-    <div class="todolist-item__content">
-      <input [(ngModel)]="todoItem.text" (blur)="saveEditItem()">
-
-      <button (click)="saveEditItem()">Save</button>
-    </div>
-  </ng-container>
-
-</div> -->
-
 <ng-container *ngIf="stateIsEdit$ | async as stateIsEdit">
 	<ng-container *ngIf="{ selectedItemId: (selectedItemId$ | async) } as observables">
 
@@ -42,7 +19,7 @@
 					<shared-button
 						[hidden]="todoItem.status === 'COMPLETED'"
 						[tooltip]="'Нажмите для удаления задачи'"
-						(click)="deleteTodo()"
+						(click)="deleteTodo($event)"
 						[red]="true"
 					>
 						Delete

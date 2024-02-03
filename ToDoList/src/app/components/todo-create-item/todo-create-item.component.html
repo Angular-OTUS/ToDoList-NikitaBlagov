@@ -1,7 +1,7 @@
 
 <div class="todo-create-item">
   <form
-    class="input-container"
+    class="form"
     [formGroup]="form"
     (submit)="addItem()"
   >
@@ -20,14 +20,14 @@
     </mat-form-field>
 
     <shared-button
+			class="btn-add"
       [tooltip]="'Нажмите для добавления задачи'"
       [green]="true"
       [disabled]="!form.valid"
       [type]="'submit'"
       (click)="addItem()"
-      (click)="onAddTodo()"
     >
       Add
     </shared-button>
-</form>
+	</form>
 </div>
