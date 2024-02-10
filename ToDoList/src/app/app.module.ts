@@ -26,8 +26,8 @@ import { TodoItemViewComponent } from './components/todo-item-view/todo-item-vie
     TooltipComponent,
     ToastsComponent,
     TodoCreateItemComponent,
-		PageTasksComponent,
-  TodoItemViewComponent
+    PageTasksComponent,
+    TodoItemViewComponent
   ],
   imports: [
     BrowserModule,

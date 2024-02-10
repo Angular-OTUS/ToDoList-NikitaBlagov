@@ -6,8 +6,8 @@
 			[ngClass]="{
 				'todolist-item__selected': todoItem.id === observables.selectedItemId
 			}"
-			(click)="clickItem(todoItem)"
 			(dblclick)="setEditMode(true)"
+			[routerLink]="'/tasks/' + todoItem.id"
 		>
 			<div
 				class="todolist-item__content"
@@ -32,10 +32,16 @@
 					'todolist-item__content_active': stateIsEdit.isEdit
 				}"
 			>
-				<input [(ngModel)]="todoItem.text" (blur)="saveEditItem()">
+				<input [(ngModel)]="todoItem.text">
 
 				<button (click)="saveEditItem()">Save</button>
 			</div>
+
+			<!-- <todo-item-view
+					[todoItem]="todoItem"
+					[isSelected]="stateIsEdit.isEdit"
+					(saved)="saveEditItem()">
+			</todo-item-view> -->
 
 		</div>
 	</ng-container>

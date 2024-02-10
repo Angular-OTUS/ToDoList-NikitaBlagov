@@ -7,70 +7,16 @@
       "id": 1
     },
     {
-      "text": "asdas",
-      "description": "dasdasd",
+      "text": "Тест 1 ",
+      "description": "Описание теста 1",
       "status": "COMPLETED",
       "id": 2
     },
     {
-      "text": "asda",
-      "description": "dsaadsa",
-      "status": "COMPLETED",
+      "text": "sad",
+      "description": "описание теста 2",
+      "status": "ACTIVE",
       "id": 3
-    },
-    {
-      "text": "asd",
-      "description": "adsadas",
-      "status": "COMPLETED",
-      "id": 4
-    },
-    {
-      "text": "asd",
-      "description": "asdadas",
-      "status": "COMPLETED",
-      "id": 5
-    },
-    {
-      "text": "asds",
-      "description": "asdsa",
-      "status": "COMPLETED",
-      "id": 6
-    },
-    {
-      "text": "asdsa",
-      "description": "dasdas",
-      "status": "COMPLETED",
-      "id": 7
-    },
-    {
-      "text": "asd",
-      "description": "adasdsa",
-      "status": "ACTIVE",
-      "id": 8
-    },
-    {
-      "text": "asd",
-      "description": "adas",
-      "status": "COMPLETED",
-      "id": 9
-    },
-    {
-      "text": "asd",
-      "description": "asd",
-      "status": "COMPLETED",
-      "id": 10
-    },
-    {
-      "text": "das",
-      "description": "sdasa",
-      "status": "ACTIVE",
-      "id": 11
-    },
-    {
-      "text": "asdsa",
-      "description": "dadsa",
-      "status": "ACTIVE",
-      "id": 12
     }
   ]
 }

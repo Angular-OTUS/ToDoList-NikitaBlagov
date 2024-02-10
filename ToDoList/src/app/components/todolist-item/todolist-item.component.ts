@@ -1,15 +1,15 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import {TodoItem} from "../../models";
 import { TodoService } from 'src/app/services/todo.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-todolist-item',
   templateUrl: './todolist-item.component.html',
   styleUrls: ['./todolist-item.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush
-
 })
 export class TodolistItemComponent implements OnChanges {
   @Input({ required: true }) public todoItem!: TodoItem;
@@ -19,7 +19,9 @@ export class TodolistItemComponent implements OnChanges {
 
   constructor(
     private todoService: TodoService,
-    private toastService: ToastService
+    private toastService: ToastService,
+		private readonly _route: ActivatedRoute,
+		private readonly _cdr: ChangeDetectorRef
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -30,7 +32,6 @@ export class TodolistItemComponent implements OnChanges {
 
   public setEditMode(bool: boolean): void {
     if (this.allowedToEdit === false) return;
-
     this.stateIsEdit$.next({ isEdit: bool });
   }
 
@@ -40,9 +41,16 @@ export class TodolistItemComponent implements OnChanges {
     this.toastService.showToast('Задача изменена');
   }
 
-	public clickItem(todoItem: TodoItem): void {
+	public clickItem(todoItem: TodoItem, _event: any): void {
+		const event = _event as PointerEvent;
+		const targetNode = event.target as HTMLElement;
+		const isTodolistItem = targetNode.classList.contains('todolist-item') || targetNode.classList.contains('todolist-item__content');
+
     if (this.allowedToEdit === false) return;
+		if (isTodolistItem === false) return; // если кликнули на .todolist-item или .todolist-item__content, то завершить функцию
+
     this.todoService.select(todoItem.id);
+
   }
 
   public deleteTodo(_event: any): void {
@@ -56,5 +64,10 @@ export class TodolistItemComponent implements OnChanges {
 			this.toastService.showToast('Задача удалена');
 		});
   }
+
+	public getTodoItemLink() {
+		return this.selectedItemId$
+	}
+
 
 }

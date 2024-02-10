@@ -16,7 +16,7 @@ export class TodoService {
   private stateSelectedItemId: BehaviorSubject<number | null> = new BehaviorSubject<null | number>(null);
   private selectedItem$: Observable<TodoItem | null> = this.stateSelectedItemId
     .pipe(
-      map(selectedItemId => this._findByIdNotServer(selectedItemId as number))
+      map(selectedItemId => this._getByIdNotServer(selectedItemId as number))
     );
 
   public selectedItemId$: Observable<number | null> = this.stateSelectedItemId.asObservable();
@@ -95,8 +95,8 @@ export class TodoService {
 	}
 
 
-  public select(id: number): void {
-		if (id === this.stateSelectedItemId.value) {
+  public select(id: number | null): void {
+		if (id === this.stateSelectedItemId.value || id === null) {
 			this.stateSelectedItemId.next(null);
 			return;
 		}
@@ -110,6 +110,14 @@ export class TodoService {
   public getCurrentStatus(): StateTodoStatus {
     return this.stateTodoStatus.value;
   }
+
+	public getById(id: number): Observable<TodoItem | null> {
+		return this.stateTodos.pipe(
+			map((stateTodos) => {
+				return stateTodos.find(todo => todo.id === id) || null;
+			})
+		);
+	}
 
 	private _delete(id: number): Observable<void> {
 		return this.todoHttpService.deleteById(id).pipe(
@@ -131,7 +139,7 @@ export class TodoService {
 		);
 	}
 
-  private _findByIdNotServer(id: number): TodoItem | null {
+  private _getByIdNotServer(id: number): TodoItem | null {
     const findedTodoIdx = this.stateTodos.value.findIndex((stateTodo) => id === stateTodo.id);
 
     if (findedTodoIdx === -1) return null;
