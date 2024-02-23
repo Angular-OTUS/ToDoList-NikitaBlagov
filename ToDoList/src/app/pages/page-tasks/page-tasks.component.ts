@@ -6,8 +6,7 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-page-tasks',
   templateUrl: './page-tasks.component.html',
-  styleUrl: './page-tasks.component.scss',
-	changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './page-tasks.component.scss'
 })
 export class PageTasksComponent {
 }

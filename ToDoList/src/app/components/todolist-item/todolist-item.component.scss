@@ -7,9 +7,12 @@
 }
 
 .todolist-item {
+	display: block;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+	text-decoration: none;
+	color: inherit;
 }
 
 .todolist-item__content {

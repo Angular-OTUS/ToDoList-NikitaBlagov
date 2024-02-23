@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {TodoItem} from "../../models";
 import { Observable, map, of, switchMap, tap } from 'rxjs';
@@ -7,10 +7,9 @@ import { TodoService } from 'src/app/services/todo.service';
 @Component({
   selector: 'todo-item-view',
   templateUrl: './todo-item-view.component.html',
-  styleUrl: './todo-item-view.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './todo-item-view.component.scss'
 })
-export class TodoItemViewComponent {
+export class TodoItemViewComponent implements OnInit {
 	private _id$: Observable<string | undefined> = this._route.params.pipe(
 		map(params => params['id'])
 	);
@@ -20,6 +19,8 @@ export class TodoItemViewComponent {
 			return this._todoService.getById(Number(id));
 		}),
 		tap((todoItem) => {
+			console.log(todoItem);
+
 			if (todoItem !== null) {
 				this._todoService.select(todoItem.id);
 			} else {
@@ -30,8 +31,13 @@ export class TodoItemViewComponent {
 
 	constructor(
 		private readonly _route: ActivatedRoute,
-		private readonly _todoService: TodoService
+		private readonly _todoService: TodoService,
+		private readonly _cdr: ChangeDetectorRef
 	) {
+	}
+
+	ngOnInit(): void {
+		// this._cdr.detectChanges();
 	}
 
 	// save() {

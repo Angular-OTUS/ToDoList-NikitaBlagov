@@ -5,8 +5,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'toasts',
   templateUrl: './toasts.component.html',
-  styleUrl: './toasts.component.scss',
-	changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './toasts.component.scss'
 })
 export class ToastsComponent {
 

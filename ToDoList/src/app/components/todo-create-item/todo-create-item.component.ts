@@ -9,7 +9,6 @@ import { TodoItemStatus } from 'src/app/models';
   selector: 'todo-create-item',
   templateUrl: './todo-create-item.component.html',
   styleUrl: './todo-create-item.component.scss',
-	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoCreateItemComponent {
   public form = new FormGroup({
@@ -17,9 +16,8 @@ export class TodoCreateItemComponent {
     textarea: new FormControl('', [Validators.required])
   });
   constructor(
-      private todoService: TodoService,
-      private toastService: ToastService
-
+		private todoService: TodoService,
+		private toastService: ToastService
   ) {}
 
   public addItem(): void {

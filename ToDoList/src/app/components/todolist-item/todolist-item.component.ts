@@ -8,14 +8,20 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-todolist-item',
   templateUrl: './todolist-item.component.html',
-  styleUrls: ['./todolist-item.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./todolist-item.component.scss']
 })
 export class TodolistItemComponent implements OnChanges {
   @Input({ required: true }) public todoItem!: TodoItem;
   public stateIsEdit$ = new BehaviorSubject({ isEdit: false });
   public allowedToEdit: boolean = false;
-	public selectedItemId$: Observable<number | null> = this.todoService.selectedItemId$;
+	public selectedItemId$: Observable<number | null> = this.todoService.selectedItemId$
+	.pipe(
+		tap(selectedItemId => {
+			this._cdr.detectChanges();
+			// console.log(selectedItemId);
+		})
+	);
+	public todoItemLink$ = this._getTodoItemLink();
 
   constructor(
     private todoService: TodoService,
@@ -50,7 +56,6 @@ export class TodolistItemComponent implements OnChanges {
 		if (isTodolistItem === false) return; // если кликнули на .todolist-item или .todolist-item__content, то завершить функцию
 
     this.todoService.select(todoItem.id);
-
   }
 
   public deleteTodo(_event: any): void {
@@ -65,8 +70,19 @@ export class TodolistItemComponent implements OnChanges {
 		});
   }
 
-	public getTodoItemLink() {
-		return this.selectedItemId$
+	private _getTodoItemLink(): Observable<string> {
+		return this.selectedItemId$.pipe(
+			map(selectedItemId => {
+				if (selectedItemId === this.todoItem.id) {
+					return '/tasks/';
+				}
+				return `/tasks/${this.todoItem.id}`;
+			}),
+			tap(url => {
+				this._cdr.detectChanges();
+				console.log(url, this.todoItem.id);
+			})
+		);
 	}
 
 

@@ -26,7 +26,7 @@ export class TooltipDirective {
 
   }
 
-  @HostListener('mouseenter')
+  @HostListener('pointerenter')
   onMouseEnter(): void {
     if (this.componentRef === null) {
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(TooltipComponent);
@@ -49,7 +49,7 @@ export class TooltipDirective {
     }
   }
 
-  @HostListener('mouseleave')
+  @HostListener('pointerleave')
   onMouseLeave(): void {
     this.destroy();
   }

@@ -1,14 +1,14 @@
-<ng-container *ngIf="stateIsEdit$ | async as stateIsEdit">
-	<ng-container *ngIf="{ selectedItemId: (selectedItemId$ | async) } as observables">
-
-		<div
+<ng-container *ngIf="{ selectedItemId: (selectedItemId$ | async) } as observables">
+	<ng-container *ngIf="todoItemLink$ | async as todoItemLink">
+		<a
 			class="todolist-item"
 			[ngClass]="{
 				'todolist-item__selected': todoItem.id === observables.selectedItemId
 			}"
 			(dblclick)="setEditMode(true)"
-			[routerLink]="'/tasks/' + todoItem.id"
+			[routerLink]="todoItemLink"
 		>
+		<ng-container *ngIf="stateIsEdit$ | async as stateIsEdit">
 			<div
 				class="todolist-item__content"
 				[ngClass]="{
@@ -37,13 +37,8 @@
 				<button (click)="saveEditItem()">Save</button>
 			</div>
 
-			<!-- <todo-item-view
-					[todoItem]="todoItem"
-					[isSelected]="stateIsEdit.isEdit"
-					(saved)="saveEditItem()">
-			</todo-item-view> -->
-
-		</div>
+			</ng-container>
+		</a>
 	</ng-container>
 </ng-container>
 

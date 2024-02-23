@@ -8,8 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-todolist',
   templateUrl: './todolist.component.html',
-  styleUrls: ['./todolist.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./todolist.component.scss']
 })
 export class TodolistComponent implements OnInit {
   public form = new FormGroup({

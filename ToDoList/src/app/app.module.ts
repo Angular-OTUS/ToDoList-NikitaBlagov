@@ -17,6 +17,7 @@ import { TodoCreateItemComponent } from "./components/todo-create-item/todo-crea
 import { HttpClientModule } from '@angular/common/http';
 import { PageTasksComponent } from './pages/page-tasks/page-tasks.component';
 import { TodoItemViewComponent } from './components/todo-item-view/todo-item-view.component';
+import { TodoItemViewEmptyComponent } from './components/todo-item-view-empty/todo-item-view-empty.component';
 ;
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TodoItemViewComponent } from './components/todo-item-view/todo-item-vie
     ToastsComponent,
     TodoCreateItemComponent,
     PageTasksComponent,
-    TodoItemViewComponent
+    TodoItemViewComponent,
+    TodoItemViewEmptyComponent
   ],
   imports: [
     BrowserModule,

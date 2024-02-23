@@ -3,8 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 @Component({
   selector: 'tooltip',
   templateUrl: './tooltip.component.html',
-  styleUrls: ['./tooltip.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./tooltip.component.scss']
 })
 export class TooltipComponent {
   tooltip: string = '';
